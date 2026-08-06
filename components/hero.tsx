@@ -244,7 +244,7 @@ function ScrollIndicator() {
 
 function AmbientLighting() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-[3] overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 z-[3] hidden overflow-hidden sm:block">
       <motion.div
         className="absolute -left-[12%] -top-[18%] h-[55%] w-[52%]"
         style={{
