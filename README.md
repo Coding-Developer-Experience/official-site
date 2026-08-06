@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Codex
 
-## Getting Started
+Komunitas mahasiswa yang belajar bersama, membangun project nyata, dan berkembang menjadi developer profesional.
 
-First, run the development server:
+## Tentang Codex
+
+Codex adalah website untuk komunitas developer mahasiswa. Situs ini dirancang sebagai landing page hero yang hangat, terang, dan inspiratif — menampilkan ilustrasi kampus sebagai visual utama, dengan UI yang bersih dan premium agar setiap pengunjung langsung merasakan suasana komunitas yang ramah.
+
+## Fitur
+
+- Hero section editorial dengan ilustrasi komunitas sebagai elemen visual utama
+- Animasi awan lembut yang bergerak perlahan pada area langit
+- Judul dengan identitas warna khas Codex: Build (biru), Learn (abu gelap), Together (kuning hangat)
+- Search bar utama untuk mencari project, event, artikel, atau topik
+- Tag populer: Next.js, Workshop, Hackathon, Open Source, UI/UX, React
+- CTA utama: Join Community dan Explore Projects
+- Navigasi minimal dengan hover underline, tombol rounded, dan efek skala halus
+- Fade-in animation saat halaman dimuat
+- Fully responsive
+
+## Teknologi
+
+- [Next.js 15](https://nextjs.org) — App Router
+- [Tailwind CSS](https://tailwindcss.com) — styling
+- [shadcn/ui](https://ui.shadcn.com) — komponen UI
+- [Framer Motion](https://www.framer.com/motion/) — transisi & animasi
+- TypeScript
+
+## Cara Menjalankan
+
+**Prasyarat:** Node.js 18.18 atau lebih baru.
 
 ```bash
+# install dependencies
+npm install
+
+# jalankan development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3001](http://localhost:3001) di browser. Catatan: port default 3000 mungkin sudah terpakai, sehingga Next.js otomatis memilih port 3001.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Untuk build produksi:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Struktur Folder
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/            halaman dan layout (App Router)
+components/     komponen React, termasuk hero
+components/ui/  komponen shadcn/ui
+lib/            utilitas (cn)
+public/         aset statis, termasuk ilustrasi animasi
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Kontribusi
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Repo ini adalah bagian dari upaya komunitas. Silakan buka _issue_ atau kirim _pull request_ untuk saran dan perbaikan.
