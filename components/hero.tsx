@@ -81,11 +81,11 @@ function Navbar() {
 }
 
 const searchPlaceholders = [
-  "Cari Project",
-  "Cari Workshop",
-  "Cari Open Source",
-  "Cari AI",
-  "Cari Hackathon",
+  "Project",
+  "Workshop",
+  "Open Source",
+  "Artificial Intelligence",
+  "Hackathon",
 ];
 
 function useTypewriter() {
