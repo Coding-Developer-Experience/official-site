@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Search, Mouse } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -79,19 +80,84 @@ function Navbar() {
   );
 }
 
+const searchPlaceholders = [
+  "Cari Project",
+  "Cari Workshop",
+  "Cari Open Source",
+  "Cari AI",
+  "Cari Hackathon",
+];
+
+function useTypewriter() {
+  const [typed, setTyped] = useState("");
+
+  useEffect(() => {
+    let idx = 0;
+    let len = 0;
+    let deleting = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const phrase = searchPlaceholders[idx];
+      if (!deleting) {
+        len += 1;
+        setTyped(phrase.slice(0, len));
+        if (len === phrase.length) {
+          deleting = true;
+          timer = setTimeout(tick, 1500);
+        } else {
+          timer = setTimeout(tick, 75);
+        }
+      } else {
+        len -= 1;
+        setTyped(phrase.slice(0, len));
+        if (len === 0) {
+          deleting = false;
+          idx = (idx + 1) % searchPlaceholders.length;
+          timer = setTimeout(tick, 450);
+        } else {
+          timer = setTimeout(tick, 35);
+        }
+      }
+    };
+    timer = setTimeout(tick, 700);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return typed;
+}
+
 function SearchBar() {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState("");
+  const [focused, setFocused] = useState(false);
+  const typed = useTypewriter();
+  const showPlaceholder = !value && !focused;
+
   return (
     <motion.div
       variants={item}
       className="pointer-events-auto relative w-[min(100%,760px)] sm:w-[760px]"
     >
       <div className="group relative rounded-full border border-neutral-200 bg-white/80 p-1.5 pr-2 shadow-[0_14px_40px_-18px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 focus-within:border-neutral-300 focus-within:shadow-[0_0_0_4px_rgba(13,13,13,0.06),0_18px_50px_-18px_rgba(0,0,0,0.28)] focus-within:ring-2 focus-within:ring-neutral-200/60">
-        <div className="flex items-center gap-3 pl-5 pr-2">
-          <input
-            type="text"
-            placeholder="Cari project, event, artikel, atau topik..."
-            className="h-11 w-full bg-transparent text-[16px] text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline-none"
-          />
+        <div className="flex items-center pr-2">
+          <div className="relative flex-1 pl-5">
+            <input
+              ref={inputRef}
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              aria-label="Pencarian"
+              className="relative z-10 h-11 w-full bg-transparent text-[16px] text-neutral-900 outline-none focus:outline-none"
+            />
+            {showPlaceholder && (
+              <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center gap-0.5 text-[16px] text-neutral-400">
+                {typed}
+                <span className="caret-blink">▍</span>
+              </span>
+            )}
+          </div>
           <button
             aria-label="Cari"
             className="grid size-11 shrink-0 place-items-center rounded-full bg-neutral-900 text-white transition-transform duration-200 hover:scale-105"
