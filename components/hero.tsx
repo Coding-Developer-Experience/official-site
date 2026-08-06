@@ -1,0 +1,264 @@
+"use client";
+
+import Image from "next/image";
+import { Search, Mouse } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "Events", href: "#events" },
+  { label: "Blog", href: "#blog" },
+  { label: "Team", href: "#team" },
+];
+
+const tags = ["Next.js", "Workshop", "Hackathon", "Open Source", "UI/UX", "React"];
+
+const container: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+function Navbar() {
+  return (
+    <motion.header
+      variants={item}
+      initial="hidden"
+      animate="show"
+      className="relative z-10 flex items-center justify-between px-6 py-6 sm:px-10 lg:px-14"
+    >
+      <a href="#home" className="text-xl font-bold tracking-tight text-neutral-900">
+        Codex<span className="text-neutral-400">.</span>
+      </a>
+
+      <nav className="hidden items-center gap-7 lg:flex">
+        {navItems.map(({ label, href }) => (
+          <a
+            key={label}
+            href={href}
+            className={cn(
+              "group relative text-[15px] font-medium text-neutral-600 transition-colors duration-200 hover:text-neutral-900",
+              label === "Home" && "text-neutral-900"
+            )}
+          >
+            {label}
+            <span
+              className={cn(
+                "absolute -bottom-1.5 left-0 h-[2px] w-full origin-left rounded-full bg-neutral-900 transition-transform duration-300 scale-x-0 group-hover:scale-x-100",
+                label === "Home" && "scale-x-100"
+              )}
+            />
+          </a>
+        ))}
+      </nav>
+
+      <a
+        href="#join"
+        className={cn(
+          buttonVariants({ variant: "default" }),
+          "h-11 rounded-full px-6 text-[15px] font-medium transition-transform duration-200 hover:scale-[1.03]"
+        )}
+      >
+        Join Codex
+      </a>
+    </motion.header>
+  );
+}
+
+function SearchBar() {
+  return (
+    <motion.div
+      variants={item}
+      className="pointer-events-auto relative w-[min(100%,760px)] sm:w-[760px]"
+    >
+      <div className="group relative rounded-full border border-neutral-200 bg-white/80 p-1.5 pr-2 shadow-[0_14px_40px_-18px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 focus-within:border-neutral-300 focus-within:shadow-[0_0_0_4px_rgba(13,13,13,0.06),0_18px_50px_-18px_rgba(0,0,0,0.28)] focus-within:ring-2 focus-within:ring-neutral-200/60">
+        <div className="flex items-center gap-3 pl-5 pr-2">
+          <input
+            type="text"
+            placeholder="Cari project, event, artikel, atau topik..."
+            className="h-11 w-full bg-transparent text-[16px] text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline-none"
+          />
+          <button
+            aria-label="Cari"
+            className="grid size-11 shrink-0 place-items-center rounded-full bg-neutral-900 text-white transition-transform duration-200 hover:scale-105"
+          >
+            <Search className="size-[18px]" strokeWidth={2.4} />
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+        <span className="mr-1 text-[13px] font-medium text-neutral-500">Populer:</span>
+        {tags.map((tag) => (
+          <a
+            key={tag}
+            href="#"
+            className="rounded-full border border-neutral-200 bg-white/70 px-3.5 py-1.5 text-[13px] font-medium text-neutral-600 backdrop-blur transition-colors duration-200 hover:border-neutral-300 hover:text-neutral-900"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function CloudShape({ w, h }: { w: number; h: number }) {
+  return (
+    <div
+      className="relative [filter:drop-shadow(0_8px_12px_rgba(148,163,184,0.35))]"
+      style={{ width: w, height: h }}
+    >
+      <div className="absolute bottom-0 left-0 h-[62%] w-full rounded-[50%] bg-gradient-to-t from-sky-100 via-white to-white" />
+      <div className="absolute bottom-[18%] left-[16%] h-[70%] w-[46%] rounded-[50%] bg-white" />
+      <div className="absolute bottom-[10%] right-[40%] h-[58%] w-[42%] rounded-[50%] bg-white" />
+      <div className="absolute bottom-[6%] right-[8%] h-[46%] w-[34%] rounded-[50%] bg-white" />
+    </div>
+  );
+}
+
+const clouds = [
+  { left: "10%", top: "8%", w: 260, h: 76, duration: 52, from: -20, to: 20 },
+  { left: "60%", top: "20%", w: 200, h: 58, duration: 34, from: 20, to: -20 },
+  { left: "34%", top: "31%", w: 230, h: 66, duration: 46, from: -16, to: 22 },
+];
+
+function Clouds() {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[38%] overflow-hidden sm:block">
+      <div className="relative hidden h-full translate-y-[15px] sm:block">
+        {clouds.map((c, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{ left: c.left, top: c.top }}
+            animate={{ x: [c.from, c.to] }}
+            transition={{
+              duration: c.duration,
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "easeInOut",
+            }}
+          >
+            <CloudShape w={c.w} h={c.h} />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScrollIndicator() {
+  return (
+    <motion.div
+      variants={item}
+      className="pointer-events-none absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
+    >
+      <Mouse className="size-4 text-neutral-300" />
+      <span className="text-[12px] tracking-wide text-neutral-400">
+        Scroll to explore
+      </span>
+    </motion.div>
+  );
+}
+
+export default function Hero() {
+  return (
+    <main id="home" className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(10,10,10,0.06),transparent_60%)]" />
+
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <Image
+          src="/animasi.png"
+          alt="Ilustrasi komunitas developer mahasiswa"
+          fill
+          priority
+          className="pointer-events-none object-cover object-bottom"
+        />
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_bottom,#dbeafe_0%,#bae6fd_18%,rgba(186,230,253,0.7)_45%,transparent_75%)]" />
+
+      <Clouds />
+
+      <div className="relative z-10 flex min-h-screen flex-col">
+        <Navbar />
+
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="flex flex-1 flex-col items-center justify-center px-6 pt-6 pb-28 text-center md:pt-8"
+        >
+          <motion.div
+            variants={item}
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white/80 px-4 py-1.5 text-[13px] font-medium text-neutral-500 shadow-sm backdrop-blur"
+          >
+            <span className="size-1.5 rounded-full bg-emerald-500" />
+            Community untuk developer mahasiswa
+          </motion.div>
+
+          <motion.h1
+            variants={item}
+            className="max-w-4xl text-[56px] font-bold leading-[0.98] tracking-tight text-neutral-900 sm:text-7xl lg:text-7xl"
+          >
+            <span className="text-[#3B82F6]">Build.</span>
+            <br />
+            <span className="text-[#111827]">Learn.</span>
+            <br />
+            <span className="text-[#F7B731]">Together.</span>
+          </motion.h1>
+
+          <motion.p
+            variants={item}
+            className="mt-5 max-w-xl text-[17px] leading-relaxed text-neutral-800 sm:text-lg"
+          >
+            Komunitas mahasiswa yang belajar bersama, membangun project nyata,
+            dan berkembang menjadi developer profesional.
+          </motion.p>
+
+          <motion.div variants={item} className="mt-8">
+            <SearchBar />
+          </motion.div>
+
+          <motion.div variants={item} className="mt-7 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="#join"
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "h-12 rounded-full px-8 text-[15px] font-medium transition-transform duration-200 hover:scale-[1.03]"
+              )}
+            >
+              Join Community
+            </a>
+            <a
+              href="#projects"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "h-12 rounded-full bg-white/70 px-8 text-[15px] font-medium backdrop-blur transition-transform duration-200 hover:scale-[1.03]"
+              )}
+            >
+              Explore Projects
+            </a>
+          </motion.div>
+        </motion.div>
+
+        <ScrollIndicator />
+      </div>
+    </main>
+  );
+}
