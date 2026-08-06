@@ -176,6 +176,40 @@ function ScrollIndicator() {
   );
 }
 
+function AmbientLighting() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[3] overflow-hidden">
+      <motion.div
+        className="absolute -left-[12%] -top-[18%] h-[55%] w-[52%]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(251,191,36,0.30) 0%, transparent 70%)",
+        }}
+        animate={{ opacity: [0.5, 0.95, 0.5], x: [0, 45, 0] }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute -right-[14%] top-[8%] h-[58%] w-[46%]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(129,140,248,0.28) 0%, transparent 70%)",
+        }}
+        animate={{ opacity: [0.45, 0.9, 0.45], x: [0, -35, 0] }}
+        transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute -bottom-[12%] left-[18%] h-[52%] w-[62%]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(52,211,153,0.22) 0%, transparent 70%)",
+        }}
+        animate={{ opacity: [0.35, 0.7, 0.35] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+  );
+}
+
 export default function Hero() {
   return (
     <main id="home" className="relative min-h-screen overflow-hidden">
@@ -194,6 +228,8 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_bottom,#dbeafe_0%,#bae6fd_18%,rgba(186,230,253,0.7)_45%,transparent_75%)]" />
 
       <Clouds />
+
+      <AmbientLighting />
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <Navbar />
