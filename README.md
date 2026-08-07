@@ -1,6 +1,27 @@
-# Codex
+<p align="center">
+  <img src="assets/hero-banner.svg" alt="Codex animated banner" width="800" />
+</p>
 
-Komunitas mahasiswa yang belajar bersama, membangun project nyata, dan berkembang menjadi developer profesional.
+<h1 align="center">Codex</h1>
+
+<p align="center">
+  Komunitas mahasiswa yang belajar bersama, membangun project nyata, dan berkembang menjadi developer profesional.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38bdf8?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
+</p>
+
+<p align="center">
+  <img src="https://shields.io/github/contributors/Coding-Developer-Experience/official-site" alt="Contributors" />
+  <img src="https://shields.io/github/commit-activity/m/Coding-Developer-Experience/official-site" alt="Commit activity" />
+  <img src="https://shields.io/github/languages/count/Coding-Developer-Experience/official-site" alt="Languages" />
+</p>
+
+<br/>
 
 ## Tentang Codex
 
