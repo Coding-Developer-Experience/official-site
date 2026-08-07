@@ -136,7 +136,7 @@ function SearchBar() {
   return (
     <motion.div
       variants={item}
-      className="pointer-events-auto relative w-[min(100%,760px)] sm:w-[760px]"
+      className="pointer-events-auto relative mx-auto w-[min(100%,760px)] sm:w-[760px]"
     >
       <div className="group relative rounded-full border border-neutral-200 bg-white/80 p-1 pr-2 shadow-[0_14px_40px_-18px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 focus-within:border-neutral-300 focus-within:shadow-[0_0_0_4px_rgba(13,13,13,0.06),0_18px_50px_-18px_rgba(0,0,0,0.28)] focus-within:ring-2 focus-within:ring-neutral-200/60 sm:p-1.5">
         <div className="flex items-center pr-2">
@@ -169,11 +169,14 @@ function SearchBar() {
 
       <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5 sm:mt-4 sm:gap-2">
         <span className="mr-1 text-xs font-medium text-neutral-500 sm:text-[13px]">Populer:</span>
-        {tags.map((tag) => (
+        {tags.map((tag, i) => (
           <a
             key={tag}
             href="#"
-            className="rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-xs font-medium text-neutral-600 backdrop-blur transition-colors duration-200 hover:border-neutral-300 hover:text-neutral-900 sm:px-3.5 sm:py-1.5 sm:text-[13px]"
+            className={cn(
+              "rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-xs font-medium text-neutral-600 backdrop-blur transition-colors duration-200 hover:border-neutral-300 hover:text-neutral-900 sm:px-3.5 sm:py-1.5 sm:text-[13px]",
+              i >= 2 && "hidden sm:inline-flex"
+            )}
           >
             {tag}
           </a>
@@ -198,9 +201,9 @@ function CloudShape({ w, h }: { w: number; h: number }) {
 }
 
 const clouds = [
-  { left: "10%", top: "8%", w: 260, h: 76, duration: 52, from: -20, to: 20 },
-  { left: "60%", top: "20%", w: 200, h: 58, duration: 34, from: 20, to: -20 },
-  { left: "34%", top: "31%", w: 230, h: 66, duration: 46, from: -16, to: 22 },
+  { left: "10%", top: "8%", w: 260, h: 76, duration: 16, delay: 0, from: -24, to: 26 },
+  { left: "60%", top: "20%", w: 200, h: 58, duration: 10, delay: 6, from: 26, to: -26 },
+  { left: "34%", top: "31%", w: 230, h: 66, duration: 13.5, delay: 3, from: -22, to: 30 },
 ];
 
 function Clouds() {
@@ -214,6 +217,7 @@ function Clouds() {
             style={{ left: c.left, top: c.top }}
             animate={{ x: [c.from, c.to] }}
             transition={{
+              delay: c.delay,
               duration: c.duration,
               repeat: Infinity,
               repeatType: "mirror",
