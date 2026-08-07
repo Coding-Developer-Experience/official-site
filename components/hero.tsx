@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, Mouse, Menu, X } from "lucide-react";
-import { motion, type Variants } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -343,6 +343,99 @@ function Clouds() {
   );
 }
 
+const activitySlides = [
+  {
+    label: "Open Source Sprint",
+    meta: "14.00 - 17.00",
+    footer: "12 peserta bergabung",
+  },
+  {
+    label: "Frontend Study Jam",
+    meta: "📍 Discord Voice",
+    footer: "8 peserta aktif",
+  },
+  {
+    label: "Repository Update",
+    meta: "codex/community · +12 commit",
+    footer: "+3 Pull Request · Review berjalan",
+  },
+  {
+    label: "Diskusi Hari Ini",
+    meta: "AI Agent dengan LangGraph",
+    footer: "32 balasan · Aktif sekarang",
+  },
+];
+
+function CodeCard() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((i) => (i + 1) % activitySlides.length), 3800);
+    return () => clearInterval(id);
+  }, []);
+
+  const slide = activitySlides[index];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.6, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="pointer-events-none absolute right-[6%] top-[22%] z-[6] hidden -rotate-2 lg:block"
+    >
+      <motion.div
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="w-[300px] overflow-hidden rounded-2xl border border-white/60 bg-white/70 p-1 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.35)] backdrop-blur-xl"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="px-4 py-3"
+          >
+            <p className="flex items-center gap-2 text-xs font-semibold tracking-wide text-neutral-500">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              </span>
+              Hari Ini
+            </p>
+
+            <div className="mt-3 flex items-start justify-between gap-3">
+              <h4 className="text-[15px] font-semibold leading-snug text-neutral-900">
+                {slide.label}
+              </h4>
+              <span className="shrink-0 rounded-full bg-neutral-100 px-2 py-0.5 text-[10.5px] font-medium text-neutral-500">
+                {slide.meta}
+              </span>
+            </div>
+
+            <p className="mt-2 border-t border-neutral-100 pt-2 text-[12px] text-neutral-500">
+              {slide.footer}
+            </p>
+
+            <div className="mt-3 flex items-center gap-1">
+              {activitySlides.map((_, i) => (
+                <span
+                  key={i}
+                  className={cn(
+                    "h-1.5 rounded-full transition-all duration-300",
+                    i === index ? "w-4 bg-[#2563EB]" : "w-1.5 bg-neutral-200"
+                  )}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function ScrollIndicator() {
   return (
     <motion.div
@@ -403,6 +496,8 @@ export default function Hero() {
       <Clouds />
 
       <AmbientLighting />
+
+      <CodeCard />
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <Navbar />
