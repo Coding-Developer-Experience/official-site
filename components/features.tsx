@@ -116,13 +116,6 @@ export default function Features() {
       className="relative overflow-hidden bg-white"
       style={{ paddingTop: 120, paddingBottom: 120 }}
     >
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 45% at 50% 0%, rgba(37,99,235,0.05) 0%, transparent 70%)",
-        }}
-      />
       <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:radial-gradient(#2563EB_1px,transparent_1px)] [background-size:24px_24px]" />
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-8">
@@ -131,7 +124,7 @@ export default function Features() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="flex w-full flex-col items-start text-left"
+          className="flex w-full flex-col items-center text-center"
         >
           <motion.p
             variants={item}

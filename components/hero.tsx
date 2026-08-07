@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { Search, Mouse } from "lucide-react";
+import { Search, Mouse, Menu, X } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { buttonVariants } from "@/components/ui/button";
@@ -35,48 +34,138 @@ const item: Variants = {
 };
 
 function Navbar() {
+  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <motion.header
-      variants={item}
-      initial="hidden"
-      animate="show"
-      className="relative z-10 flex items-center justify-between px-4 py-4 sm:px-10 sm:py-6 lg:px-14"
+      initial={false}
+      animate={{ opacity: visible ? 1 : 0 }}
+      className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-8 sm:pt-5"
     >
-      <a href="#home" className="text-lg font-bold tracking-tight text-neutral-900 sm:text-xl">
-        Codex<span className="text-neutral-400">.</span>
-      </a>
+      <div className="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between rounded-2xl border border-white/60 bg-white/70 px-5 py-3 shadow-[0_8px_32px_-12px_rgba(15,23,42,0.12)] backdrop-blur-xl">
+        <a href="#home" className="text-lg font-bold tracking-tight text-neutral-900 sm:text-xl">
+          Codex<span className="text-neutral-400">.</span>
+        </a>
 
-      <nav className="hidden items-center gap-7 lg:flex">
-        {navItems.map(({ label, href }) => (
+        <nav className="hidden items-center gap-7 lg:flex">
+          {navItems.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              className={cn(
+                "group relative text-[15px] font-medium text-neutral-600 transition-colors duration-200 hover:text-neutral-900",
+                label === "Home" && "text-neutral-900"
+              )}
+            >
+              {label}
+              <span
+                className={cn(
+                  "absolute -bottom-1.5 left-0 h-[2px] w-full origin-left rounded-full bg-neutral-900 transition-transform duration-300 scale-x-0 group-hover:scale-x-100",
+                  label === "Home" && "scale-x-100"
+                )}
+              />
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
           <a
-            key={label}
-            href={href}
+            href="#join"
             className={cn(
-              "group relative text-[15px] font-medium text-neutral-600 transition-colors duration-200 hover:text-neutral-900",
-              label === "Home" && "text-neutral-900"
+              buttonVariants({ variant: "default" }),
+              "hidden h-9 rounded-full px-4 text-sm font-medium transition-transform duration-200 hover:scale-[1.03] sm:h-11 sm:px-6 sm:text-[15px] lg:inline-flex"
             )}
           >
-            {label}
-            <span
-              className={cn(
-                "absolute -bottom-1.5 left-0 h-[2px] w-full origin-left rounded-full bg-neutral-900 transition-transform duration-300 scale-x-0 group-hover:scale-x-100",
-                label === "Home" && "scale-x-100"
-              )}
-            />
+            Join Codex
           </a>
-        ))}
-      </nav>
 
-      <a
-        href="#join"
-        className={cn(
-          buttonVariants({ variant: "default" }),
-          "h-9 rounded-full px-4 text-sm font-medium transition-transform duration-200 hover:scale-[1.03] sm:h-11 sm:px-6 sm:text-[15px]"
-        )}
-      >
-        Join Codex
-      </a>
+          <button
+            type="button"
+            aria-label={open ? "Tutup menu" : "Buka menu"}
+            onClick={() => setOpen((v) => !v)}
+            className="grid size-10 place-items-center rounded-full border border-neutral-200 bg-white/60 text-neutral-800 transition-colors duration-200 hover:bg-neutral-100 sm:size-11 lg:hidden"
+          >
+            {open ? <X className="size-5" strokeWidth={2} /> : <Menu className="size-5" strokeWidth={2} />}
+          </button>
+        </div>
+      </div>
+
+      <MobileMenu open={open} onClose={() => setOpen(false)} />
     </motion.header>
+  );
+}
+
+const menuItem: Variants = {
+  hidden: { opacity: 0, x: -16 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  return (
+    <motion.div
+      initial={false}
+      animate={open ? "show" : "hidden"}
+      variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
+      className={cn(
+        "fixed inset-0 z-[-1] flex flex-col justify-between bg-white/85 px-6 pt-28 pb-10 backdrop-blur-2xl lg:hidden",
+        open ? "pointer-events-auto" : "pointer-events-none"
+      )}
+    >
+      <motion.nav
+        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } } }}
+        className="flex flex-col gap-1"
+      >
+        {navItems.map(({ label, href }) => (
+          <motion.a
+            key={label}
+            variants={menuItem}
+            href={href}
+            onClick={onClose}
+            className="group flex items-center justify-between border-b border-neutral-100 py-4 text-2xl font-semibold tracking-tight text-neutral-900 transition-colors hover:text-[#2563EB]"
+          >
+            {label}
+            <span className="text-sm font-normal text-neutral-300 transition-colors group-hover:text-[#2563EB]">
+              {String(href).replace("#", "").replace("/", "")}
+            </span>
+          </motion.a>
+        ))}
+      </motion.nav>
+
+      <div className="flex flex-col gap-3">
+        <a
+          href="#join"
+          onClick={onClose}
+          className={cn(
+            buttonVariants({ variant: "default" }),
+            "h-12 w-full rounded-full text-[15px] font-medium"
+          )}
+        >
+          Join Codex
+        </a>
+        <p className="text-center text-xs text-neutral-400">
+          Coding Developer Experience
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -186,11 +275,10 @@ function SearchBar() {
   );
 }
 
-function CloudShape({ w, h }: { w: number; h: number }) {
+function CloudShape({ size }: { size: string }) {
   return (
     <div
-      className="relative [filter:drop-shadow(0_8px_12px_rgba(148,163,184,0.35))]"
-      style={{ width: w, height: h }}
+      className={cn("relative [filter:drop-shadow(0_8px_12px_rgba(148,163,184,0.35))]", size)}
     >
       <div className="absolute bottom-0 left-0 h-[62%] w-full rounded-[50%] bg-gradient-to-t from-sky-100 via-white to-white" />
       <div className="absolute bottom-[18%] left-[16%] h-[70%] w-[46%] rounded-[50%] bg-white" />
@@ -201,20 +289,43 @@ function CloudShape({ w, h }: { w: number; h: number }) {
 }
 
 const clouds = [
-  { left: "10%", top: "8%", w: 260, h: 76, duration: 16, delay: 0, from: -24, to: 26 },
-  { left: "60%", top: "20%", w: 200, h: 58, duration: 10, delay: 6, from: 26, to: -26 },
-  { left: "34%", top: "31%", w: 230, h: 66, duration: 13.5, delay: 3, from: -22, to: 30 },
+  {
+    left: "left-[6%] sm:left-[10%]",
+    top: "top-[8%]",
+    size: "w-[120px] h-[35px] sm:w-[260px] sm:h-[76px]",
+    duration: 16,
+    delay: 0,
+    from: -24,
+    to: 26,
+  },
+  {
+    left: "left-[52%] sm:left-[60%]",
+    top: "top-[20%]",
+    size: "w-[100px] h-[29px] sm:w-[200px] sm:h-[58px]",
+    duration: 10,
+    delay: 6,
+    from: 26,
+    to: -26,
+  },
+  {
+    left: "left-[30%] sm:left-[34%]",
+    top: "top-[31%]",
+    size: "hidden w-[110px] h-[32px] sm:block sm:w-[230px] sm:h-[66px]",
+    duration: 13.5,
+    delay: 3,
+    from: -22,
+    to: 30,
+  },
 ];
 
 function Clouds() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[38%] overflow-hidden sm:block">
-      <div className="relative hidden h-full translate-y-[15px] sm:block">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-[38%] overflow-hidden">
+      <div className="relative h-full translate-y-[15px]">
         {clouds.map((c, i) => (
           <motion.div
             key={i}
-            className="absolute"
-            style={{ left: c.left, top: c.top }}
+            className={cn("absolute", c.left, c.top)}
             animate={{ x: [c.from, c.to] }}
             transition={{
               delay: c.delay,
@@ -224,7 +335,7 @@ function Clouds() {
               ease: "easeInOut",
             }}
           >
-            <CloudShape w={c.w} h={c.h} />
+            <CloudShape size={c.size} />
           </motion.div>
         ))}
       </div>
@@ -285,17 +396,9 @@ export default function Hero() {
     <main id="home" className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(10,10,10,0.06),transparent_60%)]" />
 
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <Image
-          src="/animasi.png"
-          alt="Ilustrasi komunitas developer mahasiswa"
-          fill
-          priority
-          className="pointer-events-none object-cover object-bottom"
-        />
-      </div>
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_bottom,#dbeafe_0%,#bae6fd_12%,rgba(186,230,253,0.4)_36%,#ffffff_68%,#ffffff_100%)]" />
 
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_bottom,#dbeafe_0%,#bae6fd_18%,rgba(186,230,253,0.7)_45%,transparent_75%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-44 bg-gradient-to-t from-white via-white/85 to-transparent" />
 
       <Clouds />
 
@@ -308,7 +411,7 @@ export default function Hero() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-1 flex-col items-center justify-center px-5 pt-5 pb-20 text-center sm:px-6 sm:pt-6 sm:pb-28 md:pt-8"
+          className="flex flex-1 flex-col items-center justify-center px-5 pt-24 pb-20 text-center sm:px-6 sm:pt-28 sm:pb-28"
         >
           <motion.div
             variants={item}
@@ -320,7 +423,7 @@ export default function Hero() {
 
           <motion.h1
             variants={item}
-            className="max-w-4xl text-[44px] font-bold leading-[0.98] tracking-tight text-neutral-900 sm:text-6xl lg:text-7xl"
+            className="max-w-4xl text-[44px] font-bold leading-[0.98] tracking-tight text-neutral-900 sm:text-6xl lg:text-8xl"
           >
             <span className="text-[#3B82F6]">Build.</span>
             <br />
@@ -331,10 +434,11 @@ export default function Hero() {
 
           <motion.p
             variants={item}
-            className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-800 sm:mt-5 sm:text-lg"
+            className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-800 sm:mt-5 sm:max-w-2xl sm:text-lg lg:text-xl"
           >
-            Komunitas mahasiswa yang belajar bersama, membangun project nyata,
-            dan berkembang menjadi developer profesional.
+            Wadah kolaborasi mahasiswa dalam mempelajari teknologi, merancang
+            proyek nyata, serta membentuk talenta pengembang yang
+            profesional.
           </motion.p>
 
           <motion.div variants={item} className="mt-6 w-full sm:mt-8">
