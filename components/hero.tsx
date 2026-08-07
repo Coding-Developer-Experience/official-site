@@ -40,9 +40,9 @@ function Navbar() {
       variants={item}
       initial="hidden"
       animate="show"
-      className="relative z-10 flex items-center justify-between px-6 py-6 sm:px-10 lg:px-14"
+      className="relative z-10 flex items-center justify-between px-4 py-4 sm:px-10 sm:py-6 lg:px-14"
     >
-      <a href="#home" className="text-xl font-bold tracking-tight text-neutral-900">
+      <a href="#home" className="text-lg font-bold tracking-tight text-neutral-900 sm:text-xl">
         Codex<span className="text-neutral-400">.</span>
       </a>
 
@@ -71,7 +71,7 @@ function Navbar() {
         href="#join"
         className={cn(
           buttonVariants({ variant: "default" }),
-          "h-11 rounded-full px-6 text-[15px] font-medium transition-transform duration-200 hover:scale-[1.03]"
+          "h-9 rounded-full px-4 text-sm font-medium transition-transform duration-200 hover:scale-[1.03] sm:h-11 sm:px-6 sm:text-[15px]"
         )}
       >
         Join Codex
@@ -138,9 +138,9 @@ function SearchBar() {
       variants={item}
       className="pointer-events-auto relative w-[min(100%,760px)] sm:w-[760px]"
     >
-      <div className="group relative rounded-full border border-neutral-200 bg-white/80 p-1.5 pr-2 shadow-[0_14px_40px_-18px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 focus-within:border-neutral-300 focus-within:shadow-[0_0_0_4px_rgba(13,13,13,0.06),0_18px_50px_-18px_rgba(0,0,0,0.28)] focus-within:ring-2 focus-within:ring-neutral-200/60">
+      <div className="group relative rounded-full border border-neutral-200 bg-white/80 p-1 pr-2 shadow-[0_14px_40px_-18px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 focus-within:border-neutral-300 focus-within:shadow-[0_0_0_4px_rgba(13,13,13,0.06),0_18px_50px_-18px_rgba(0,0,0,0.28)] focus-within:ring-2 focus-within:ring-neutral-200/60 sm:p-1.5">
         <div className="flex items-center pr-2">
-          <div className="relative flex-1 pl-5">
+          <div className="relative flex-1 pl-4 sm:pl-5">
             <input
               ref={inputRef}
               type="text"
@@ -149,10 +149,10 @@ function SearchBar() {
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               aria-label="Pencarian"
-              className="relative z-10 h-11 w-full bg-transparent text-[16px] text-neutral-900 outline-none focus:outline-none"
+              className="relative z-10 h-10 w-full bg-transparent text-[15px] text-neutral-900 outline-none focus:outline-none sm:h-11 sm:text-[16px]"
             />
             {showPlaceholder && (
-              <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center gap-0.5 text-[16px] text-neutral-400">
+              <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center gap-0.5 text-[15px] text-neutral-400 sm:left-5 sm:text-[16px]">
                 {typed}
                 <span className="caret-blink">▍</span>
               </span>
@@ -160,20 +160,20 @@ function SearchBar() {
           </div>
           <button
             aria-label="Cari"
-            className="grid size-11 shrink-0 place-items-center rounded-full bg-neutral-900 text-white transition-transform duration-200 hover:scale-105"
+            className="grid size-9 shrink-0 place-items-center rounded-full bg-neutral-900 text-white transition-transform duration-200 hover:scale-105 sm:size-11"
           >
-            <Search className="size-[18px]" strokeWidth={2.4} />
+            <Search className="size-4 sm:size-[18px]" strokeWidth={2.4} />
           </button>
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-        <span className="mr-1 text-[13px] font-medium text-neutral-500">Populer:</span>
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5 sm:mt-4 sm:gap-2">
+        <span className="mr-1 text-xs font-medium text-neutral-500 sm:text-[13px]">Populer:</span>
         {tags.map((tag) => (
           <a
             key={tag}
             href="#"
-            className="rounded-full border border-neutral-200 bg-white/70 px-3.5 py-1.5 text-[13px] font-medium text-neutral-600 backdrop-blur transition-colors duration-200 hover:border-neutral-300 hover:text-neutral-900"
+            className="rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-xs font-medium text-neutral-600 backdrop-blur transition-colors duration-200 hover:border-neutral-300 hover:text-neutral-900 sm:px-3.5 sm:py-1.5 sm:text-[13px]"
           >
             {tag}
           </a>
@@ -232,7 +232,7 @@ function ScrollIndicator() {
   return (
     <motion.div
       variants={item}
-      className="pointer-events-none absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
+      className="pointer-events-none absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
     >
       <Mouse className="size-4 text-neutral-300" />
       <span className="text-[12px] tracking-wide text-neutral-400">
@@ -304,11 +304,11 @@ export default function Hero() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-1 flex-col items-center justify-center px-6 pt-6 pb-28 text-center md:pt-8"
+          className="flex flex-1 flex-col items-center justify-center px-5 pt-5 pb-20 text-center sm:px-6 sm:pt-6 sm:pb-28 md:pt-8"
         >
           <motion.div
             variants={item}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white/80 px-4 py-1.5 text-[13px] font-medium text-neutral-500 shadow-sm backdrop-blur"
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white/80 px-3 py-1 text-xs font-medium text-neutral-500 shadow-sm backdrop-blur sm:mb-5 sm:px-4 sm:py-1.5 sm:text-[13px]"
           >
             <span className="size-1.5 rounded-full bg-emerald-500" />
             Community untuk developer mahasiswa
@@ -316,7 +316,7 @@ export default function Hero() {
 
           <motion.h1
             variants={item}
-            className="max-w-4xl text-[56px] font-bold leading-[0.98] tracking-tight text-neutral-900 sm:text-7xl lg:text-7xl"
+            className="max-w-4xl text-[44px] font-bold leading-[0.98] tracking-tight text-neutral-900 sm:text-6xl lg:text-7xl"
           >
             <span className="text-[#3B82F6]">Build.</span>
             <br />
@@ -327,22 +327,22 @@ export default function Hero() {
 
           <motion.p
             variants={item}
-            className="mt-5 max-w-xl text-[17px] leading-relaxed text-neutral-800 sm:text-lg"
+            className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-800 sm:mt-5 sm:text-lg"
           >
             Komunitas mahasiswa yang belajar bersama, membangun project nyata,
             dan berkembang menjadi developer profesional.
           </motion.p>
 
-          <motion.div variants={item} className="mt-8">
+          <motion.div variants={item} className="mt-6 w-full sm:mt-8">
             <SearchBar />
           </motion.div>
 
-          <motion.div variants={item} className="mt-7 flex flex-wrap items-center justify-center gap-3">
+          <motion.div variants={item} className="mt-6 flex w-full max-w-sm flex-col items-center justify-center gap-2.5 sm:mt-7 sm:max-w-none sm:flex-row sm:gap-3">
             <a
               href="#join"
               className={cn(
                 buttonVariants({ variant: "default" }),
-                "h-12 rounded-full px-8 text-[15px] font-medium transition-transform duration-200 hover:scale-[1.03]"
+                "h-11 w-full rounded-full px-8 text-[15px] font-medium transition-transform duration-200 hover:scale-[1.03] sm:h-12 sm:w-auto"
               )}
             >
               Join Community
@@ -351,7 +351,7 @@ export default function Hero() {
               href="#projects"
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "h-12 rounded-full bg-white/70 px-8 text-[15px] font-medium backdrop-blur transition-transform duration-200 hover:scale-[1.03]"
+                "h-11 w-full rounded-full bg-white/70 px-8 text-[15px] font-medium backdrop-blur transition-transform duration-200 hover:scale-[1.03] sm:h-12 sm:w-auto"
               )}
             >
               Explore Projects
