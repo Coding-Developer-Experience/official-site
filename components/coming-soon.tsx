@@ -58,6 +58,13 @@ export default function ComingSoon() {
         <a href="#utama" className="text-lg font-bold tracking-tight text-neutral-900 sm:text-xl">
           Xcode<span className="text-[#3B82F6]">.</span>
         </a>
+        <a
+          href="/"
+          className="inline-flex items-center gap-1.5 rounded-full border border-sky-200/80 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-sky-900 shadow-sm backdrop-blur transition-all hover:border-sky-300 hover:bg-white hover:text-blue-600"
+        >
+          <span>Web HMTI</span>
+          <span className="text-sky-500">↗</span>
+        </a>
       </header>
 
       <section id="utama" className="relative z-10 mx-auto my-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-5 py-2 sm:px-8">
