@@ -1,24 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Codex — Komunitas Developer Mahasiswa",
+  title: "Xcode — Komunitas Developer Mahasiswa",
   description:
     "Komunitas mahasiswa yang belajar bersama, membangun project nyata, dan berkembang menjadi developer profesional.",
+  keywords: ["Xcode", "Komunitas Developer", "Coding", "Mahasiswa", "Web Development", "HMTI"],
 };
 
 export default function RootLayout({
@@ -28,11 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={cn("scroll-smooth font-sans", inter.variable)}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="font-sans antialiased">
         {children}
       </body>
     </html>
   );
 }
+

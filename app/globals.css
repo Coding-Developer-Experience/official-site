@@ -10,6 +10,79 @@
   animation: caret-blink 1s steps(1) infinite;
 }
 
+.yongki-party {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  z-index: 10;
+  animation: yongki-party-walk 7.5s linear infinite alternate;
+}
+.yongki-party-still { left: calc(50% - 2.7rem); animation: none; }
+.yongki-facing { transform-origin: bottom center; animation: yongki-facing-turn 7.5s step-end infinite alternate; }
+.yongki-speech {
+  position: absolute;
+  bottom: 130px;
+  left: 43px;
+  z-index: 25;
+  width: max-content;
+  max-width: 170px;
+  transform: translateX(-50%);
+  border: 1.5px solid rgba(203, 213, 225, 0.9);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+  padding: 6px 14px;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.22), 0 4px 6px -4px rgba(15, 23, 42, 0.1);
+  pointer-events: none;
+}
+.yongki-speech::after {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  content: "";
+  transform: translateX(-50%) rotate(45deg);
+  border-right: 1.5px solid rgba(203, 213, 225, 0.9);
+  border-bottom: 1.5px solid rgba(203, 213, 225, 0.9);
+  background: #ffffff;
+}
+@keyframes yongki-party-walk {
+  0% { transform: translateX(16px); }
+  100% { transform: translateX(calc(100vw - 112px)); }
+}
+@keyframes yongki-facing-turn { from { transform: scaleX(1); } to { transform: scaleX(-1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .yongki-party, .yongki-facing { animation: none; }
+}
+
+.sky-cloud { display: block; width: 82px; filter: drop-shadow(0 7px 8px rgba(84,42,48,.12)); }.sky-cloud-large { transform: scale(1.25); }.sky-cloud-medium { transform: scale(.86); }.sky-cloud-small { transform: scale(.6); }
+
+.yongki { position: relative; width: 86px; height: 126px; transform-origin: bottom center; animation: yongki-bob .48s ease-in-out infinite alternate; }
+.yongki-ear { position: absolute; top: 0; width: 26px; height: 42px; border: 3px solid #542a30; background: #e99b72; border-radius: 62% 10% 55% 10%; z-index: 1; }
+.yongki-ear-left { left: 12px; transform: rotate(-20deg); }
+.yongki-ear-right { right: 11px; transform: scaleX(-1) rotate(-20deg); }
+.yongki-tail { position: absolute; top: 75px; right: -14px; width: 43px; height: 25px; border: 3px solid #542a30; border-radius: 70% 15% 70% 15%; background: #e99b72; transform: rotate(26deg); z-index: 0; animation: yongki-tail 1s ease-in-out infinite alternate; }
+.yongki-head { position: absolute; top: 16px; left: 10px; z-index: 3; width: 67px; height: 58px; border: 3px solid #542a30; border-radius: 48% 48% 43% 43%; background: #e99b72; }
+.yongki-eye { position: absolute; top: 20px; width: 14px; height: 18px; border-radius: 50%; background: #462a31; box-shadow: inset 4px 4px 0 #b97861; }
+.yongki-eye-left { left: 14px; }.yongki-eye-right { right: 14px; }
+.yongki-muzzle { position: absolute; bottom: 6px; left: 19px; width: 26px; height: 15px; border-radius: 50%; background: #fff8ee; }
+.yongki-nose { position: absolute; bottom: 15px; left: 29px; width: 9px; height: 6px; border-radius: 50%; background: #542a30; z-index: 1; }
+.yongki-jacket { position: absolute; top: 68px; left: 20px; z-index: 2; width: 50px; height: 43px; border: 3px solid #542a30; border-radius: 14px 14px 8px 8px; background: #20232c; }
+.yongki-shirt { position: absolute; top: 6px; left: 15px; width: 16px; height: 32px; border-radius: 5px; background: #fff8ee; }
+.yongki-arm { position: absolute; top: 77px; z-index: 1; width: 33px; height: 14px; border: 3px solid #542a30; border-radius: 999px; background: #20232c; transform-origin: right center; }
+.yongki-arm-left { left: 0; transform: rotate(25deg); animation: yongki-wave 7.5s linear infinite alternate; }.yongki-arm-right { right: 0; transform: rotate(-16deg); }
+.yongki-leg { position: absolute; top: 108px; z-index: 1; width: 14px; height: 24px; border-radius: 9px; background: #252a39; transform-origin: top; }.yongki-leg-left { left: 28px; animation: yongki-step .44s ease-in-out infinite alternate; }.yongki-leg-right { right: 28px; animation: yongki-step .44s ease-in-out infinite alternate-reverse; }
+@keyframes yongki-bob { to { transform: translateY(-3px) rotate(1deg); } }@keyframes yongki-wave { from { transform: rotate(25deg); } to { transform: rotate(-48deg); } }@keyframes yongki-step { to { transform: rotate(25deg); } }@keyframes yongki-tail { to { transform: rotate(-2deg); } }
+@media (prefers-reduced-motion: reduce) { .yongki, .yongki-arm-left, .yongki-leg-left, .yongki-leg-right, .yongki-tail { animation: none; } }
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

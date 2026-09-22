@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tool directories and media caches
+videos/
+.21st/
+.agents/
+.codex/
+

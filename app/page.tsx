@@ -1,11 +1,5 @@
-import Hero from "@/components/hero";
-import Features from "@/components/features";
+import ComingSoon from "@/components/coming-soon";
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <Features />
-    </>
-  );
+  return <ComingSoon />;
 }

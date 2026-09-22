@@ -59,7 +59,7 @@ function Navbar() {
     >
       <div className="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between rounded-2xl border border-white/60 bg-white/70 px-5 py-3 shadow-[0_8px_32px_-12px_rgba(15,23,42,0.12)] backdrop-blur-xl">
         <a href="#home" className="text-lg font-bold tracking-tight text-neutral-900 sm:text-xl">
-          Codex<span className="text-neutral-400">.</span>
+          Xcode<span className="text-[#3B82F6]">.</span>
         </a>
 
         <nav className="hidden items-center gap-7 lg:flex">
@@ -91,7 +91,7 @@ function Navbar() {
               "hidden h-9 rounded-full px-4 text-sm font-medium transition-transform duration-200 hover:scale-[1.03] sm:h-11 sm:px-6 sm:text-[15px] lg:inline-flex"
             )}
           >
-            Join Codex
+            Join Xcode
           </a>
 
           <button
@@ -120,6 +120,16 @@ const menuItem: Variants = {
 };
 
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (open) {
+      window.addEventListener("keydown", onKeyDown);
+    }
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open, onClose]);
+
   return (
     <motion.div
       initial={false}
@@ -159,7 +169,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             "h-12 w-full rounded-full text-[15px] font-medium"
           )}
         >
-          Join Codex
+          Join Xcode
         </a>
         <p className="text-center text-xs text-neutral-400">
           Coding Developer Experience
@@ -222,12 +232,29 @@ function SearchBar() {
   const typed = useTypewriter();
   const showPlaceholder = !value && !focused;
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (value.trim()) {
+      // Future search route or anchor
+      const target = document.getElementById("about");
+      target?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleTagClick = (tag: string) => {
+    setValue(tag);
+    inputRef.current?.focus();
+  };
+
   return (
     <motion.div
       variants={item}
       className="pointer-events-auto relative mx-auto w-[min(100%,760px)] sm:w-[760px]"
     >
-      <div className="group relative rounded-full border border-neutral-200 bg-white/80 p-1 pr-2 shadow-[0_14px_40px_-18px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 focus-within:border-neutral-300 focus-within:shadow-[0_0_0_4px_rgba(13,13,13,0.06),0_18px_50px_-18px_rgba(0,0,0,0.28)] focus-within:ring-2 focus-within:ring-neutral-200/60 sm:p-1.5">
+      <form
+        onSubmit={handleSearch}
+        className="group relative rounded-full border border-neutral-200 bg-white/80 p-1 pr-2 shadow-[0_14px_40px_-18px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 focus-within:border-neutral-300 focus-within:shadow-[0_0_0_4px_rgba(13,13,13,0.06),0_18px_50px_-18px_rgba(0,0,0,0.28)] focus-within:ring-2 focus-within:ring-neutral-200/60 sm:p-1.5"
+      >
         <div className="flex items-center pr-2">
           <div className="relative flex-1 pl-4 sm:pl-5">
             <input
@@ -248,27 +275,29 @@ function SearchBar() {
             )}
           </div>
           <button
+            type="submit"
             aria-label="Cari"
-            className="grid size-9 shrink-0 place-items-center rounded-full bg-neutral-900 text-white transition-transform duration-200 hover:scale-105 sm:size-11"
+            className="grid size-9 shrink-0 place-items-center rounded-full bg-neutral-900 text-white transition-transform duration-200 hover:scale-105 sm:size-11 cursor-pointer"
           >
             <Search className="size-4 sm:size-[18px]" strokeWidth={2.4} />
           </button>
         </div>
-      </div>
+      </form>
 
       <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5 sm:mt-4 sm:gap-2">
         <span className="mr-1 text-xs font-medium text-neutral-500 sm:text-[13px]">Populer:</span>
         {tags.map((tag, i) => (
-          <a
+          <button
+            type="button"
             key={tag}
-            href="#"
+            onClick={() => handleTagClick(tag)}
             className={cn(
-              "rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-xs font-medium text-neutral-600 backdrop-blur transition-colors duration-200 hover:border-neutral-300 hover:text-neutral-900 sm:px-3.5 sm:py-1.5 sm:text-[13px]",
+              "cursor-pointer rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-xs font-medium text-neutral-600 backdrop-blur transition-all duration-200 hover:border-neutral-300 hover:bg-white hover:text-neutral-900 hover:scale-105 sm:px-3.5 sm:py-1.5 sm:text-[13px]",
               i >= 2 && "hidden sm:inline-flex"
             )}
           >
             {tag}
-          </a>
+          </button>
         ))}
       </div>
     </motion.div>
@@ -356,7 +385,7 @@ const activitySlides = [
   },
   {
     label: "Repository Update",
-    meta: "codex/community · +12 commit",
+    meta: "xcode/community · +12 commit",
     footer: "+3 Pull Request · Review berjalan",
   },
   {
@@ -381,7 +410,7 @@ function CodeCard() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="pointer-events-none absolute right-[6%] top-[22%] z-[6] hidden -rotate-2 lg:block"
+      className="absolute right-[6%] top-[22%] z-[6] hidden -rotate-2 lg:block"
     >
       <motion.div
         animate={{ y: [0, -12, 0] }}
@@ -418,13 +447,16 @@ function CodeCard() {
               {slide.footer}
             </p>
 
-            <div className="mt-3 flex items-center gap-1">
+            <div className="mt-3 flex items-center gap-1.5">
               {activitySlides.map((_, i) => (
-                <span
+                <button
+                  type="button"
                   key={i}
+                  aria-label={`Slide aktivitas ${i + 1}`}
+                  onClick={() => setIndex(i)}
                   className={cn(
-                    "h-1.5 rounded-full transition-all duration-300",
-                    i === index ? "w-4 bg-[#2563EB]" : "w-1.5 bg-neutral-200"
+                    "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                    i === index ? "w-4 bg-[#2563EB]" : "w-1.5 bg-neutral-200 hover:bg-neutral-300"
                   )}
                 />
               ))}

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/hero-banner.svg" alt="Codex animated banner" width="800" />
+  <img src="assets/hero-banner.svg" alt="Xcode animated banner" width="800" />
 </p>
 
-<h1 align="center">Codex</h1>
+<h1 align="center">Xcode</h1>
 
 <p align="center">
   Komunitas mahasiswa yang belajar bersama, membangun project nyata, dan berkembang menjadi developer profesional.
@@ -23,15 +23,15 @@
 
 <br/>
 
-## Tentang Codex
+## Tentang Xcode
 
-Codex adalah website untuk komunitas developer mahasiswa. Situs ini dirancang sebagai landing page hero yang hangat, terang, dan inspiratif — menampilkan ilustrasi kampus sebagai visual utama, dengan UI yang bersih dan premium agar setiap pengunjung langsung merasakan suasana komunitas yang ramah.
+Xcode (Coding Developer Experience) adalah website untuk komunitas developer mahasiswa. Situs ini dirancang sebagai landing page hero yang hangat, terang, dan inspiratif — menampilkan ilustrasi kampus sebagai visual utama, dengan UI yang bersih dan premium agar setiap pengunjung langsung merasakan suasana komunitas yang ramah.
 
 ## Fitur
 
 - Hero section editorial dengan ilustrasi komunitas sebagai elemen visual utama
 - Animasi awan lembut yang bergerak perlahan pada area langit
-- Judul dengan identitas warna khas Codex: Build (biru), Learn (abu gelap), Together (kuning hangat)
+- Judul dengan identitas warna khas Xcode: Build (biru), Learn (abu gelap), Together (kuning hangat)
 - Search bar utama untuk mencari project, event, artikel, atau topik
 - Tag populer: Next.js, Workshop, Hackathon, Open Source, UI/UX, React
 - CTA utama: Join Community dan Explore Projects
