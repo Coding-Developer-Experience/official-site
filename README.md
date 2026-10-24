@@ -2,7 +2,7 @@
   <img src="assets/hero-banner.svg" alt="Xcode animated banner" width="800" />
 </p>
 
-<h1 align="center">Xcode</h1>
+<h1 align="center">Xcode — Platform Komunitas & Belajar Ngoding HMTI</h1>
 
 <p align="center">
   Komunitas mahasiswa yang belajar bersama, membangun project nyata, dan berkembang menjadi developer profesional.
@@ -15,36 +15,45 @@
   <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
 </p>
 
-<p align="center">
-  <img src="https://shields.io/github/contributors/Coding-Developer-Experience/official-site" alt="Contributors" />
-  <img src="https://shields.io/github/commit-activity/m/Coding-Developer-Experience/official-site" alt="Commit activity" />
-  <img src="https://shields.io/github/languages/count/Coding-Developer-Experience/official-site" alt="Languages" />
-</p>
-
 <br/>
 
 ## Tentang Xcode
 
-Xcode (Coding Developer Experience) adalah website untuk komunitas developer mahasiswa. Situs ini dirancang sebagai landing page hero yang hangat, terang, dan inspiratif — menampilkan ilustrasi kampus sebagai visual utama, dengan UI yang bersih dan premium agar setiap pengunjung langsung merasakan suasana komunitas yang ramah.
+Xcode (Coding Developer Experience) adalah website resmi komunitas developer mahasiswa di bawah naungan HMTI. Platform ini menggabungkan landing page profil komunitas yang inspiratif dengan **Ruang Belajar Mandiri (LMS bergaya Dicoding Classroom)** untuk kurikulum ngoding terstruktur.
 
-## Fitur
+## Fitur Unggulan
 
+### 1. Landing Page & Branding Komunitas
 - Hero section editorial dengan ilustrasi komunitas sebagai elemen visual utama
-- Animasi awan lembut yang bergerak perlahan pada area langit
-- Judul dengan identitas warna khas Xcode: Build (biru), Learn (abu gelap), Together (kuning hangat)
-- Search bar utama untuk mencari project, event, artikel, atau topik
-- Tag populer: Next.js, Workshop, Hackathon, Open Source, UI/UX, React
-- CTA utama: Join Community dan Explore Projects
-- Navigasi minimal dengan hover underline, tombol rounded, dan efek skala halus
-- Fade-in animation saat halaman dimuat
-- Fully responsive
+- Animasi awan lembut di area langit dan kartu aktivitas harian (*activity slides*)
+- Search bar interaktif dengan tag populer: Next.js, Workshop, Hackathon, Open Source, UI/UX, React
+- Call-to-Action utama: *Join Community* dan *Explore Projects*
+- Responsif penuh di desktop, tablet, dan ponsel
+
+### 2. Ruang Belajar & Modul Materi (Gaya Dicoding Classroom)
+- **Koridor Kelas (`/classes`)**: Menampilkan katalog kelas pemrograman (misal: *Membangun Sistem Web dengan Laravel & MySQL*)
+- **Ruang Baca Modul (`/classes/[slug]/modules/[moduleSlug]`)**:
+  - Top Header 64px dengan tombol *← Kembali ke Koridor Kelas* dan indikator *⚡ Poin*
+  - Left Sidebar 320px dengan progress bar oranye Xcode (`#E68C3A`), switcher tab *Daftar Modul* & *Catatan Belajar*, dan centang hijau emerald (`#10B981`)
+  - Kontainer baca ergonomis *max-width 768px* dengan tipografi nyaman (font 16–18px, line-height 1.75)
+  - Glosarium interaktif dengan kartu popover definisi istilah teknis
+  - Buku catatan belajar mandiri dengan *auto-save* per modul ke penyimpanan browser
+  - Pencarian modul cepat via shortcut keyboard `CTRL /`
+  - Floating bottom bar dengan asisten AI (*Learning with AI*) dan mode layar penuh / lebarkan
+
+## Sistem Desain (Palet B — Light Theme Default)
+- **Background Primary**: `#F4F2EF` (*Warm Ivory*)
+- **Surface / Card**: `#FFFFFF` (*Pure White*)
+- **Brand Primary / Text**: `#213E60` (*Deep Navy*)
+- **Accent / Primary CTA**: `#E68C3A` (*Vibrant Orange*)
+- **Secondary Accent**: `#94B6EF` (*Soft Sky Blue*)
+- **Status Success**: `#10B981` (*Emerald*)
 
 ## Teknologi
-
-- [Next.js 15](https://nextjs.org) — App Router
-- [Tailwind CSS](https://tailwindcss.com) — styling
-- [shadcn/ui](https://ui.shadcn.com) — komponen UI
-- [Framer Motion](https://www.framer.com/motion/) — transisi & animasi
+- [Next.js 15](https://nextjs.org) — App Router & Turbopack
+- [Tailwind CSS v4](https://tailwindcss.com) — Styling & Theme Tokens
+- [shadcn/ui](https://ui.shadcn.com) — Komponen UI
+- [Framer Motion](https://www.framer.com/motion/) — Transisi & Animasi
 - TypeScript
 
 ## Cara Menjalankan
@@ -59,7 +68,7 @@ npm install
 npm run dev
 ```
 
-Buka [http://localhost:3001](http://localhost:3001) di browser. Catatan: port default 3000 mungkin sudah terpakai, sehingga Next.js otomatis memilih port 3001.
+Buka [http://localhost:3000](http://localhost:3000) di browser untuk beranda, atau [http://localhost:3000/classes](http://localhost:3000/classes) untuk ruang kelas dan materi.
 
 Untuk build produksi:
 
@@ -71,13 +80,21 @@ npm run start
 ## Struktur Folder
 
 ```
-app/            halaman dan layout (App Router)
-components/     komponen React, termasuk hero
-components/ui/  komponen shadcn/ui
-lib/            utilitas (cn)
-public/         aset statis, termasuk ilustrasi animasi
+app/
+├── classes/                    # Koridor kelas, silabus, dan ruang baca modul
+│   ├── page.tsx                # Koridor kelas (/classes)
+│   ├── [slug]/page.tsx         # Detail silabus kelas
+│   └── [slug]/modules/[moduleSlug]/page.tsx # Ruang baca modul materi
+├── materi/                     # Rute redirect ke /classes
+├── components/
+│   ├── hero.tsx                # Hero section beranda
+│   ├── features.tsx            # Pilar utama Xcode
+│   ├── footer.tsx              # Footer navigasi bersama
+│   └── materi/                 # Komponen LMS (sidebar, reader, topbar, bottombar)
+lib/
+└── materi/                     # Kontrak data dan skema MySQL kurikulum
 ```
 
 ## Kontribusi
 
-Repo ini adalah bagian dari upaya komunitas. Silakan buka _issue_ atau kirim _pull request_ untuk saran dan perbaikan.
+Repo ini adalah bagian dari upaya komunitas Xcode HMTI. Silakan buat branch fitur dan kirim *pull request* untuk saran dan perbaikan.
