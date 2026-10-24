@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  assetPrefix: "https://codexid.vercel.app",
+  assetPrefix: process.env.NODE_ENV === "production" ? "https://codexid.vercel.app" : "",
   async headers() {
     return [
       {
