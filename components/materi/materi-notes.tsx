@@ -15,7 +15,6 @@ export default function MateriNotes({ moduleId, moduleTitle }: MateriNotesProps)
 
   const storageKey = `xcode_materi_notes_${moduleId}`;
 
-  // Load saved note on module change
   useEffect(() => {
     try {
       const saved = localStorage.getItem(storageKey);
@@ -25,12 +24,9 @@ export default function MateriNotes({ moduleId, moduleTitle }: MateriNotesProps)
         setNote("");
       }
       setSaveStatus("idle");
-    } catch {
-      // LocalStorage might be disabled
-    }
+    } catch {}
   }, [moduleId, storageKey]);
 
-  // Handle note change with auto-save
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setNote(val);
@@ -64,19 +60,19 @@ export default function MateriNotes({ moduleId, moduleTitle }: MateriNotesProps)
   };
 
   return (
-    <div className="flex h-full flex-col p-4">
+    <div className="flex h-full flex-col p-4 bg-white">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-800">
-          <FileEdit className="h-3.5 w-3.5 text-blue-600" />
+        <div className="flex items-center gap-1.5 text-xs font-bold text-[#213E60]">
+          <FileEdit className="h-3.5 w-3.5 text-[#E68C3A]" />
           <span>Catatan Belajar</span>
         </div>
 
         <div className="flex items-center gap-1 text-[11px]">
           {saveStatus === "saving" && (
-            <span className="text-amber-600 font-medium">Menyimpan...</span>
+            <span className="text-[#E68C3A] font-bold">Menyimpan...</span>
           )}
           {saveStatus === "saved" && (
-            <span className="flex items-center gap-0.5 text-emerald-600 font-medium">
+            <span className="flex items-center gap-0.5 text-[#10B981] font-bold">
               <Check className="h-3 w-3" />
               <span>Tersimpan</span>
             </span>
@@ -84,22 +80,22 @@ export default function MateriNotes({ moduleId, moduleTitle }: MateriNotesProps)
         </div>
       </div>
 
-      <p className="mt-1 text-[11px] text-neutral-400 line-clamp-1">
+      <p className="mt-1 text-[11px] text-[#213E60]/60 line-clamp-1">
         Tersambung ke modul: {moduleTitle}
       </p>
 
       <textarea
         value={note}
         onChange={handleChange}
-        placeholder="Ketik catatan penting, rangkuman, atau pertanyaan yang ingin Anda tanyakan di sini..."
-        className="mt-3 flex-1 resize-none rounded-xl border border-neutral-200 bg-neutral-50/50 p-3 text-xs leading-relaxed text-neutral-800 placeholder-neutral-400 focus:border-blue-500 focus:bg-white focus:outline-none transition-colors"
+        placeholder="Ketik catatan penting, rangkuman kode, atau pertanyaan untuk mentor di sini..."
+        className="mt-3 flex-1 resize-none rounded-xl border border-[#E5E0D8] bg-[#F4F2EF]/50 p-3 text-xs leading-relaxed text-[#213E60] placeholder-[#213E60]/40 focus:border-[#E68C3A] focus:bg-white focus:outline-none transition-colors"
       />
 
-      <div className="mt-3 flex items-center justify-between border-t border-neutral-100 pt-3">
+      <div className="mt-3 flex items-center justify-between border-t border-[#E5E0D8] pt-3">
         <button
           onClick={handleClear}
           disabled={!note}
-          className="flex items-center gap-1 text-[11px] text-neutral-400 hover:text-red-600 disabled:opacity-40 transition-colors"
+          className="flex items-center gap-1 text-[11px] text-[#213E60]/50 hover:text-[#EF4444] disabled:opacity-40 transition-colors cursor-pointer"
           title="Hapus Catatan"
         >
           <Trash2 className="h-3.5 w-3.5" />
@@ -109,9 +105,9 @@ export default function MateriNotes({ moduleId, moduleTitle }: MateriNotesProps)
         <button
           onClick={handleCopy}
           disabled={!note}
-          className="flex items-center gap-1 rounded-lg border border-neutral-200 bg-white px-2.5 py-1 text-[11px] font-medium text-neutral-600 hover:bg-neutral-50 disabled:opacity-40 transition-colors"
+          className="flex items-center gap-1 rounded-lg border border-[#E5E0D8] bg-white px-2.5 py-1 text-[11px] font-bold text-[#213E60] hover:bg-[#F4F2EF] disabled:opacity-40 transition-colors cursor-pointer"
         >
-          {copied ? <Check className="h-3 w-3 text-emerald-600" /> : <Copy className="h-3 w-3" />}
+          {copied ? <Check className="h-3 w-3 text-[#10B981]" /> : <Copy className="h-3 w-3" />}
           <span>{copied ? "Tersalin" : "Salin Catatan"}</span>
         </button>
       </div>

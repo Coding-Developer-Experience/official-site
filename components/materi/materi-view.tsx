@@ -18,14 +18,10 @@ interface MateriViewProps {
 }
 
 const DEFAULT_COMPLETED = [
+  "mod-lar-1-1",
+  "mod-lar-1-2",
   "mod-1-1",
   "mod-1-2",
-  "mod-1-3",
-  "mod-1-4",
-  "mod-1-5",
-  "mod-1-6",
-  "mod-1-7",
-  "mod-1-8",
 ];
 
 export default function MateriView({
@@ -56,6 +52,9 @@ export default function MateriView({
     }
   }, [storageKey]);
 
+  // Points calculation: +5 Poin per module (PRD Section 10)
+  const totalPoints = completedIds.length * 5;
+
   const isCurrentCompleted = completedIds.includes(moduleItem.id);
 
   const toggleCurrentComplete = () => {
@@ -71,11 +70,13 @@ export default function MateriView({
   };
 
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden bg-white text-neutral-900 font-sans">
-      {/* 1. Top Bar */}
+    // Background Primary: Putih Gading (#F4F2EF) sesuai PRD Bagian 5.1
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-[#F4F2EF] text-[#213E60] font-sans">
+      {/* 1. Classroom Top Header (64px) */}
       <MateriTopBar
         courseSlug={course.slug}
         courseTitle={course.title}
+        points={totalPoints}
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         onOpenSearch={() => setIsSearchOpen(true)}
@@ -83,7 +84,7 @@ export default function MateriView({
 
       {/* 2. Workspace Tengah: Sidebar + Content */}
       <div className="flex flex-1 overflow-hidden relative">
-        {/* Left Sidebar */}
+        {/* Left Sidebar (320px) */}
         <MateriSidebar
           course={course}
           activeModuleId={moduleItem.id}
@@ -94,7 +95,7 @@ export default function MateriView({
           onToggle={() => setIsSidebarOpen((prev) => !prev)}
         />
 
-        {/* Main Content Area */}
+        {/* Main Content Area (Pure White Surface on Warm Ivory background) */}
         <main
           className={cn(
             "flex-1 overflow-y-auto bg-white transition-all duration-300",
@@ -103,7 +104,7 @@ export default function MateriView({
         >
           <MateriReader
             course={course}
-            chapterTitle={chapter.title}
+            chapterTitle={chapter.title || chapter.chapter_title || "Bab"}
             moduleItem={moduleItem}
             prevModule={prevModule}
             nextModule={nextModule}
@@ -113,7 +114,7 @@ export default function MateriView({
         </main>
       </div>
 
-      {/* 3. Floating Bottom Bar */}
+      {/* 3. Floating Bottom Bar (Focus & AI Assistant) */}
       <MateriBottomBar
         isWide={isWide}
         onToggleWide={() => {

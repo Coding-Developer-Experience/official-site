@@ -48,7 +48,6 @@ const GLOSSARY_DICTIONARY: Record<string, { term: string; definition: string; ca
 
 // Inline parser for bold, italics, code, and glossary terms
 function formatInlineText(text: string): React.ReactNode[] {
-  // Regex splitting by bold (**...**), italic (*...*), code (`...`)
   const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g);
 
   return parts.map((part, index) => {
@@ -68,12 +67,12 @@ function formatInlineText(text: string): React.ReactNode[] {
           </GlossaryTerm>
         );
       }
-      return <strong key={index} className="font-bold text-neutral-900">{inner}</strong>;
+      return <strong key={index} className="font-bold text-[#213E60]">{inner}</strong>;
     }
 
     if (part.startsWith("*") && part.endsWith("*") && !part.startsWith("**")) {
       const inner = part.slice(1, -1);
-      return <em key={index} className="italic text-neutral-800">{inner}</em>;
+      return <em key={index} className="italic text-[#213E60]/85">{inner}</em>;
     }
 
     if (part.startsWith("`") && part.endsWith("`")) {
@@ -81,7 +80,7 @@ function formatInlineText(text: string): React.ReactNode[] {
       return (
         <code
           key={index}
-          className="rounded-md border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 text-xs font-mono text-blue-700"
+          className="rounded-md border border-[#E5E0D8] bg-[#94B6EF]/20 px-1.5 py-0.5 text-xs font-mono text-[#213E60] font-semibold"
         >
           {inner}
         </code>
@@ -124,23 +123,23 @@ function CodeBlock({ code, language }: { code: string; language?: string }) {
   };
 
   return (
-    <div className="my-4 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-900 text-neutral-100">
-      <div className="flex items-center justify-between border-b border-neutral-800 bg-neutral-950 px-4 py-2 text-xs text-neutral-400">
+    <div className="my-5 overflow-hidden rounded-2xl border border-[#E5E0D8] bg-[#213E60] text-white shadow-xs">
+      <div className="flex items-center justify-between border-b border-white/10 bg-[#172D46] px-4 py-2.5 text-xs text-white/70">
         <div className="flex items-center gap-2">
-          <Terminal className="h-3.5 w-3.5 text-blue-400" />
-          <span className="font-mono text-[11px] uppercase tracking-wide">
+          <Terminal className="h-3.5 w-3.5 text-[#E68C3A]" />
+          <span className="font-mono text-[11px] uppercase tracking-wider text-[#E68C3A] font-bold">
             {language || "code"}
           </span>
         </div>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1 rounded px-2 py-0.5 text-[11px] hover:bg-neutral-800 hover:text-white transition-colors"
+          className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-semibold hover:bg-white/15 hover:text-white transition-colors cursor-pointer"
         >
-          {copied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+          {copied ? <Check className="h-3.5 w-3.5 text-[#10B981]" /> : <Copy className="h-3.5 w-3.5" />}
           <span>{copied ? "Disalin" : "Salin"}</span>
         </button>
       </div>
-      <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-neutral-200">
+      <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-white/90">
         <code>{code}</code>
       </pre>
     </div>
@@ -160,7 +159,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
     if (!listBuffer) return;
     if (listBuffer.type === "ol") {
       renderedElements.push(
-        <ol key={`list-${key}`} className="my-3 ml-6 list-decimal space-y-1.5 text-sm sm:text-base leading-relaxed text-neutral-700">
+        <ol key={`list-${key}`} className="my-3 ml-6 list-decimal space-y-1.5 text-base leading-[1.75] text-[#213E60]/90">
           {listBuffer.items.map((it, idx) => (
             <li key={idx} className="pl-1">{formatInlineText(it)}</li>
           ))}
@@ -168,7 +167,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
       );
     } else {
       renderedElements.push(
-        <ul key={`list-${key}`} className="my-3 ml-6 list-disc space-y-1.5 text-sm sm:text-base leading-relaxed text-neutral-700">
+        <ul key={`list-${key}`} className="my-3 ml-6 list-disc space-y-1.5 text-base leading-[1.75] text-[#213E60]/90">
           {listBuffer.items.map((it, idx) => (
             <li key={idx} className="pl-1">{formatInlineText(it)}</li>
           ))}
@@ -208,7 +207,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
       continue;
     }
 
-    // Numbered List (e.g. 1. Item)
+    // Numbered List
     const olMatch = trimmed.match(/^(\d+)\.\s+(.*)$/);
     if (olMatch) {
       if (!listBuffer || listBuffer.type !== "ol") {
@@ -219,7 +218,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
       continue;
     }
 
-    // Bullet List (e.g. - Item or * Item)
+    // Bullet List
     const ulMatch = trimmed.match(/^[-*]\s+(.*)$/);
     if (ulMatch) {
       if (!listBuffer || listBuffer.type !== "ul") {
@@ -230,7 +229,6 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
       continue;
     }
 
-    // If we were in a list and hit normal line, flush
     flushList(i);
 
     if (!trimmed) {
@@ -240,7 +238,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
     // Headings
     if (trimmed.startsWith("#### ")) {
       renderedElements.push(
-        <h4 key={`h4-${i}`} className="mt-6 mb-2 text-base font-bold text-neutral-900">
+        <h4 key={`h4-${i}`} className="mt-6 mb-2 text-base font-bold text-[#213E60]">
           {formatInlineText(trimmed.slice(5))}
         </h4>
       );
@@ -249,7 +247,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
 
     if (trimmed.startsWith("### ")) {
       renderedElements.push(
-        <h3 key={`h3-${i}`} className="mt-8 mb-3 text-lg font-bold text-neutral-900 border-b border-neutral-100 pb-2">
+        <h3 key={`h3-${i}`} className="mt-8 mb-3 text-xl font-bold text-[#213E60] border-b border-[#E5E0D8] pb-2">
           {formatInlineText(trimmed.slice(4))}
         </h3>
       );
@@ -258,7 +256,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
 
     if (trimmed.startsWith("## ")) {
       renderedElements.push(
-        <h2 key={`h2-${i}`} className="mt-10 mb-4 text-xl font-extrabold tracking-tight text-neutral-900 border-b border-neutral-200 pb-2.5">
+        <h2 key={`h2-${i}`} className="mt-10 mb-4 text-2xl font-extrabold tracking-tight text-[#213E60] border-b border-[#E5E0D8] pb-2.5">
           {formatInlineText(trimmed.slice(3))}
         </h2>
       );
@@ -270,7 +268,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
       renderedElements.push(
         <blockquote
           key={`quote-${i}`}
-          className="my-4 rounded-xl border-l-4 border-blue-500 bg-blue-50/50 p-4 text-sm sm:text-base italic text-neutral-700"
+          className="my-5 rounded-2xl border-l-4 border-[#E68C3A] bg-[#F4F2EF] p-4 text-base italic text-[#213E60] leading-relaxed"
         >
           {formatInlineText(trimmed.slice(2))}
         </blockquote>
@@ -280,7 +278,7 @@ export default function MateriContentRenderer({ content }: ContentRendererProps)
 
     // Standard Paragraph
     renderedElements.push(
-      <p key={`p-${i}`} className="my-3 text-sm sm:text-base leading-relaxed text-neutral-700">
+      <p key={`p-${i}`} className="my-3 text-base leading-[1.75] text-[#213E60]/90">
         {formatInlineText(trimmed)}
       </p>
     );

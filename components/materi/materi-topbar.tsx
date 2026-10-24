@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Bell, Flame, Search, User, Sparkles, PanelLeft } from "lucide-react";
+import { ArrowLeft, Bell, Zap, Search, User, PanelLeft } from "lucide-react";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface MateriTopBarProps {
   courseSlug: string;
   courseTitle: string;
+  points?: number;
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
   onOpenSearch?: () => void;
@@ -15,6 +16,7 @@ interface MateriTopBarProps {
 
 export default function MateriTopBar({
   courseSlug,
+  points = 0,
   isSidebarOpen,
   onToggleSidebar,
   onOpenSearch,
@@ -32,71 +34,66 @@ export default function MateriTopBar({
   }, [onOpenSearch]);
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b border-neutral-200 bg-white/95 px-4 backdrop-blur-md sm:px-6">
-      {/* Kiri: Toggle Sidebar & Kembali ke koridor */}
+    // Classroom Top Header (Tinggi tetap 64px / h-16 sesuai PRD Bagian 5.3)
+    <header className="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-[#E5E0D8] bg-white/95 px-4 backdrop-blur-md sm:px-6">
+      {/* Sisi Kiri: Kembali ke Koridor Kelas & Toggle Sidebar */}
       <div className="flex items-center gap-2 sm:gap-3">
         {onToggleSidebar && (
           <button
             onClick={onToggleSidebar}
             className={cn(
-              "rounded-lg p-1.5 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-800 transition-colors",
-              isSidebarOpen && "text-blue-600 bg-blue-50/60"
+              "rounded-lg p-2 text-[#213E60]/70 hover:bg-[#F4F2EF] hover:text-[#213E60] transition-colors",
+              isSidebarOpen && "text-[#E68C3A] bg-[#E68C3A]/10"
             )}
-            title={isSidebarOpen ? "Tutup Sidebar" : "Buka Sidebar"}
+            title={isSidebarOpen ? "Sembunyikan Sidebar" : "Buka Sidebar"}
           >
-            <PanelLeft className="h-4 w-4" />
+            <PanelLeft className="h-5 w-5" />
           </button>
         )}
 
         <Link
-          href={`/materi/${courseSlug}`}
-          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 transition-colors hover:text-neutral-900 sm:text-sm"
+          href={`/classes`}
+          className="group inline-flex items-center gap-2 text-xs font-semibold text-[#213E60] transition-colors hover:text-[#E68C3A] sm:text-sm"
         >
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          <span>Kembali ke koridor</span>
+          <span>← Kembali ke Koridor Kelas</span>
         </Link>
       </div>
 
-      {/* Kanan: Badge Sabak, Search Bar, Streak, Notifikasi & Akun */}
+      {/* Sisi Kanan: Kotak Pencarian, Poin Anggota, Notifikasi & Akun */}
       <div className="flex items-center gap-2 sm:gap-4">
-        {/* Badge Sabak / Koin */}
-        <div className="hidden items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50/80 px-2.5 py-1 text-xs font-medium text-amber-800 sm:flex">
-          <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-          <span>Sabak</span>
-        </div>
-
-        {/* Search Shortcut */}
+        {/* Kotak Pencarian Modul (Cari modul...) */}
         <button
           onClick={onOpenSearch}
           type="button"
           className="relative hidden items-center md:flex text-left cursor-pointer"
         >
-          <div className="flex h-8 items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-2.5 text-xs text-neutral-400 hover:border-neutral-300 hover:bg-neutral-100/60 transition-colors">
-            <Search className="h-3.5 w-3.5" />
-            <span className="text-neutral-400">Cari materi...</span>
-            <kbd className="ml-1 rounded border border-neutral-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-neutral-500">
+          <div className="flex h-9 items-center gap-2 rounded-xl border border-[#E5E0D8] bg-[#F4F2EF] px-3 text-xs text-[#213E60]/60 hover:border-[#94B6EF] hover:bg-white transition-colors">
+            <Search className="h-3.5 w-3.5 text-[#213E60]/50" />
+            <span>Cari modul...</span>
+            <kbd className="ml-1 rounded border border-[#E5E0D8] bg-white px-1.5 py-0.5 text-[10px] font-medium text-[#213E60]/70">
               CTRL /
             </kbd>
           </div>
         </button>
 
-        {/* Streak Point */}
-        <div className="flex items-center gap-1 rounded-full border border-orange-200 bg-orange-50 px-2.5 py-1 text-xs font-semibold text-orange-600">
-          <Flame className="h-3.5 w-3.5 fill-orange-500 text-orange-500" />
-          <span>1</span>
+        {/* Indikator Poin Anggota (⚡ Poin sesuai PRD Bagian 5.3 & 10) */}
+        <div className="flex items-center gap-1.5 rounded-full border border-[#E68C3A]/30 bg-[#E68C3A]/10 px-3 py-1 text-xs font-bold text-[#E68C3A]">
+          <Zap className="h-3.5 w-3.5 fill-[#E68C3A] text-[#E68C3A]" />
+          <span>{points} Poin</span>
         </div>
 
-        {/* Notification */}
+        {/* Notifikasi */}
         <button
           type="button"
           aria-label="Notifikasi"
-          className="rounded-full p-1.5 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 transition-colors"
+          className="rounded-full p-2 text-[#213E60]/60 hover:bg-[#F4F2EF] hover:text-[#213E60] transition-colors"
         >
           <Bell className="h-4 w-4" />
         </button>
 
         {/* User Profile Avatar */}
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600 border border-blue-200">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#213E60] text-white font-bold text-xs shadow-xs">
           <User className="h-4 w-4" />
         </div>
       </div>

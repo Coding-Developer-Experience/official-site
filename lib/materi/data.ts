@@ -2,25 +2,230 @@ import { Course } from "./types";
 
 export const initialCourses: Course[] = [
   {
+    id: "class-laravel-01",
+    slug: "membangun-sistem-web-dengan-laravel",
+    title: "Membangun Sistem Web dengan Laravel & MySQL",
+    category: "Web Development",
+    level: "beginner",
+    description:
+      "Pelajari arsitektur MVC, database MySQL, sistem autentikasi NIM, dan deployment aplikasi web nyata untuk komunitas HMTI.",
+    totalModules: 6,
+    total_modules: 6,
+    chapters: [
+      {
+        id: "ch-lar-1",
+        title: "PERSIAPAN BELAJAR",
+        chapter_title: "PERSIAPAN BELAJAR",
+        orderIndex: 1,
+        order_index: 1,
+        modules: [
+          {
+            id: "mod-lar-1-1",
+            class_id: "class-laravel-01",
+            chapter_title: "PERSIAPAN BELAJAR",
+            slug: "persetujuan-hak-cipta",
+            title: "Persetujuan Hak Cipta & Aturan Belajar",
+            orderNumber: "1.1",
+            order_index: 1,
+            type: "article",
+            durationMinutes: 5,
+            estimated_minutes: 5,
+            isFree: true,
+            summary: "Syarat, ketentuan hak cipta, serta aturan kedisiplinan belajar di komunitas Xcode.",
+            content: `
+### Persetujuan Hak Cipta & Aturan Belajar
+
+Selamat datang di kelas resmi **Membangun Sistem Web dengan Laravel** oleh komunitas **Xcode HMTI**!
+
+Sebelum memulai materi teknis, berikut adalah pedoman belajar yang wajib dipatuhi:
+
+1. **Integritas Kode**: Anda diharapkan menulis dan memahami kode secara mandiri. Diskusi diperbolehkan, namun duplikasi tugas tanpa pemahaman sangat tidak dianjurkan.
+2. **Pengumpulan Tugas**: Seluruh latihan dan proyek dikumpulkan melalui **URL Repositori GitHub** yang valid sebelum batas waktu (*deadline*).
+3. **Poin Keaktifan**: Setiap modul yang selesai dibaca bernilai **+5 Poin** di Buku Besar Poin (*Points Ledger*) Anda!
+            `,
+          },
+          {
+            id: "mod-lar-1-2",
+            class_id: "class-laravel-01",
+            chapter_title: "PERSIAPAN BELAJAR",
+            slug: "pengenalan-ekosistem-laravel",
+            title: "Pengenalan Ekosistem Laravel & MySQL",
+            orderNumber: "1.2",
+            order_index: 2,
+            type: "article",
+            durationMinutes: 10,
+            estimated_minutes: 10,
+            isFree: true,
+            summary: "Mengenal arsitektur Laravel 11, PHP 8.2+, dan konfigurasi database MySQL.",
+            content: `
+### Pengenalan Ekosistem Laravel & MySQL
+
+Laravel adalah framework PHP modern yang mengutamakan sintaks ekspresif dan elegan. Dalam kurikulum Xcode HMTI, Laravel dipilih karena:
+
+- **Arsitektur MVC yang Terstruktur**: Memisahkan logika data (Model), tampilan (View), dan alur aplikasi (Controller).
+- **ORM Eloquent yang Kuat**: Memudahkan interaksi dengan database **MySQL** tanpa perlu menulis raw query SQL yang rumit.
+- **Kesiapan Shared Hosting**: Mudah di-deploy ke server kampus atau shared hosting eksisting.
+
+\`\`\`bash
+# Perintah instalasi dependensi proyek
+composer install
+npm install
+php artisan migrate
+\`\`\`
+            `,
+          },
+        ],
+      },
+      {
+        id: "ch-lar-2",
+        title: "ARSITEKTUR MVC & DATABASE",
+        chapter_title: "ARSITEKTUR MVC & DATABASE",
+        orderIndex: 2,
+        order_index: 2,
+        modules: [
+          {
+            id: "mod-lar-2-1",
+            class_id: "class-laravel-01",
+            chapter_title: "ARSITEKTUR MVC & DATABASE",
+            slug: "memahami-routing-controller-blade",
+            title: "Memahami Routing, Controller, dan Blade View",
+            orderNumber: "2.1",
+            order_index: 3,
+            type: "article",
+            durationMinutes: 15,
+            estimated_minutes: 15,
+            isFree: false,
+            summary: "Menghubungkan HTTP request rute ke controller hingga merender template Blade yang interaktif.",
+            content: `
+### Mengapa Arsitektur MVC Penting?
+
+Sama halnya dengan kolaborasi tim software developer dan IT Operations, pemisahan tanggung jawab (*Separation of Concerns*) sangat krusial:
+
+**Developer** bertugas menyusun alur bisnis di dalam **Controller**, sedangkan antarmuka pengguna dirender oleh template engine **Blade** yang bersih dan responsif.
+
+Konflik sering terjadi ketika kode logika query database dicampur aduk langsung di dalam view tampilan. Arsitektur MVC mencegah hal tersebut agar sistem tetap stabil dan mudah dirawat.
+
+\`\`\`php
+// Contoh Route & Controller di Laravel 11
+Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
+\`\`\`
+
+> Gunakan istilah teknis seperti **Developer**, **IT Operations**, dan **production** untuk melihat kartu glosarium interaktif!
+            `,
+          },
+          {
+            id: "mod-lar-2-2",
+            class_id: "class-laravel-01",
+            chapter_title: "ARSITEKTUR MVC & DATABASE",
+            slug: "migrasi-database-mysql",
+            title: "Migrasi Database MySQL & Model Eloquent",
+            orderNumber: "2.2",
+            order_index: 4,
+            type: "article",
+            durationMinutes: 15,
+            estimated_minutes: 15,
+            isFree: false,
+            summary: "Merancang skema tabel relasional users, classes, modules, dan module_progress menggunakan migration.",
+            content: `
+### Migrasi Database MySQL
+
+Migration adalah version control untuk skema database Anda. Dengan migration, tim backend dan frontend memiliki struktur tabel yang 100% konsisten.
+
+Contoh skema migrasi tabel \`module_progress\`:
+
+\`\`\`php
+Schema::create('module_progress', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('module_id')->constrained()->cascadeOnDelete();
+    $table->timestamp('completed_at');
+    $table->unique(['user_id', 'module_id']);
+});
+\`\`\`
+            `,
+          },
+        ],
+      },
+      {
+        id: "ch-lar-3",
+        title: "SISTEM AUTENTIKASI & TUGAS GITHUB",
+        chapter_title: "SISTEM AUTENTIKASI & TUGAS GITHUB",
+        orderIndex: 3,
+        order_index: 3,
+        modules: [
+          {
+            id: "mod-lar-3-1",
+            class_id: "class-laravel-01",
+            chapter_title: "SISTEM AUTENTIKASI & TUGAS GITHUB",
+            slug: "autentikasi-nim-multi-role",
+            title: "Autentikasi Berbasis NIM & Multi-Role User",
+            orderNumber: "3.1",
+            order_index: 5,
+            type: "article",
+            durationMinutes: 12,
+            estimated_minutes: 12,
+            isFree: false,
+            summary: "Penerapan login menggunakan NIM mahasiswa HMTI dan proteksi middleware admin vs member.",
+            content: `
+### Autentikasi Menggunakan NIM
+
+Platform Xcode menerapkan otentikasi berbasis **NIM (Nomor Induk Mahasiswa)**:
+- Anggota login menggunakan NIM yang telah terdaftar di database MySQL.
+- Saat login pertama kali (\`is_password_changed == false\`), anggota diwajibkan memperbarui kata sandi.
+- Pengurus memiliki peran \`admin\` untuk mengelola kelas, absensi pertemuan, dan penugasan.
+            `,
+          },
+          {
+            id: "mod-lar-3-2",
+            class_id: "class-laravel-01",
+            chapter_title: "SISTEM AUTENTIKASI & TUGAS GITHUB",
+            slug: "workflow-git-tugas-github",
+            title: "Workflow Git & Pengumpulan Tugas GitHub",
+            orderNumber: "3.2",
+            order_index: 6,
+            type: "article",
+            durationMinutes: 15,
+            estimated_minutes: 15,
+            isFree: false,
+            summary: "Tata cara push kode ke GitHub dan menempelkan tautan repositori untuk verifikasi tugas otomatis.",
+            content: `
+### Pengumpulan Tugas via GitHub
+
+Seluruh tugas koding anggota dikumpulkan dengan menempelkan **URL Repositori GitHub**:
+
+1. Pastikan repositori Anda berstatus **Public**.
+2. Commit kode Anda secara teratur dengan pesan commit yang jelas.
+3. Kumpulkan tugas sebelum batas waktu untuk mendapatkan **+100 Poin**, atau dalam masa toleransi 24 jam untuk **+60 Poin**!
+            `,
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: "course-mlops-01",
     slug: "membangun-sistem-machine-learning",
     title: "Membangun Sistem Machine Learning",
     category: "Machine Learning & AI",
-    level: "Menengah",
+    level: "intermediate",
     description:
       "Pelajari prinsip MLOps dari hulu ke hilir: lifecycle machine learning, otomatisasi pipeline, hingga deployment dan monitoring di production.",
-    totalModules: 72,
+    totalModules: 12,
+    total_modules: 12,
     chapters: [
       {
         id: "ch-1",
         title: "PERSIAPAN BELAJAR",
+        chapter_title: "PERSIAPAN BELAJAR",
         orderIndex: 1,
+        order_index: 1,
         modules: [
           {
             id: "mod-1-1",
             slug: "persetujuan-hak-cipta",
             title: "Persetujuan Hak Cipta",
             orderNumber: "1.1",
+            order_index: 1,
             type: "article",
             durationMinutes: 5,
             isFree: true,
@@ -29,11 +234,6 @@ export const initialCourses: Course[] = [
 ### Persetujuan Hak Cipta
 
 Selamat datang di kelas **Membangun Sistem Machine Learning**! Sebelum memulai proses belajar, mohon pahami bahwa seluruh materi, kode contoh, dan ilustrasi di dalam kelas ini dilindungi oleh hak cipta komunitas dan penyusun materi.
-
-#### Ketentuan Penggunaan:
-1. Materi ini diperuntukkan untuk pengembangan diri dan pembelajaran pribadi.
-2. Dilarang menggandakan atau menyebarluaskan materi tanpa izin tertulis.
-3. Anda diperbolehkan menggunakan kode contoh untuk proyek pribadi atau portofolio Anda.
             `,
           },
           {
@@ -41,6 +241,7 @@ Selamat datang di kelas **Membangun Sistem Machine Learning**! Sebelum memulai p
             slug: "pengenalan-kelas",
             title: "Pengenalan Kelas",
             orderNumber: "1.2",
+            order_index: 2,
             type: "article",
             durationMinutes: 10,
             isFree: true,
@@ -48,114 +249,7 @@ Selamat datang di kelas **Membangun Sistem Machine Learning**! Sebelum memulai p
             content: `
 ### Pengenalan Kelas
 
-Dalam dunia modern, membuat model Machine Learning saja tidaklah cukup. Tantangan terbesar adalah bagaimana model tersebut dapat diintegrasikan ke sistem nyata, di-deploy secara handal, dan dipantau saat data di dunia nyata terus berubah.
-
-Kelas ini didesain agar Anda memahami **MLOps (Machine Learning Operations)** secara komprehensif.
-            `,
-          },
-          {
-            id: "mod-1-3",
-            slug: "prasyarat-kemampuan",
-            title: "Prasyarat Kemampuan",
-            orderNumber: "1.3",
-            type: "article",
-            durationMinutes: 5,
-            isFree: true,
-            summary: "Kemampuan dasar yang dibutuhkan sebelum memulai.",
-            content: `
-### Prasyarat Kemampuan
-
-Sebelum mengikuti kelas ini, pastikan Anda telah memahami:
-- Dasar pemrograman Python.
-- Konsep dasar Machine Learning (training, testing, metrics evaluasi).
-- Dasar Git dan version control.
-            `,
-          },
-          {
-            id: "mod-1-4",
-            slug: "prasyarat-tools",
-            title: "Prasyarat Tools",
-            orderNumber: "1.4",
-            type: "article",
-            durationMinutes: 10,
-            isFree: true,
-            summary: "Perangkat lunak yang perlu disiapkan.",
-            content: `
-### Prasyarat Tools
-
-Beberapa tools yang akan digunakan sepanjang kelas:
-- **Python 3.10+**
-- **Docker & Docker Desktop**
-- **VS Code atau IDE pilihan Anda**
-- Akun Git (GitHub / GitLab)
-            `,
-          },
-          {
-            id: "mod-1-5",
-            slug: "mekanisme-belajar",
-            title: "Mekanisme Belajar",
-            orderNumber: "1.5",
-            type: "article",
-            durationMinutes: 5,
-            isFree: true,
-            summary: "Tata cara belajar dan penyelesaian tugas.",
-            content: `
-### Mekanisme Belajar
-
-- Pelajari setiap modul secara berurutan.
-- Kerjakan kuis dan latihan coding yang disediakan.
-- Gunakan fitur **Catatan Belajar** di panel samping untuk mencatat poin penting.
-- Manfaatkan asisten AI jika Anda mengalami kesulitan memahami konsep tertentu.
-            `,
-          },
-          {
-            id: "mod-1-6",
-            slug: "forum-diskusi",
-            title: "Forum Diskusi",
-            orderNumber: "1.6",
-            type: "article",
-            durationMinutes: 5,
-            isFree: false,
-            summary: "Bergabung dengan komunitas pembelajar.",
-            content: `
-### Forum Diskusi
-
-Tanyakan kendala yang Anda temui langsung di forum komunitas Discord Xcode. Tim mentor dan sesama rekan mahasiswa siap membantu menjawab pertanyaan Anda!
-            `,
-          },
-          {
-            id: "mod-1-7",
-            slug: "glosarium",
-            title: "Glosarium",
-            orderNumber: "1.7",
-            type: "article",
-            durationMinutes: 8,
-            isFree: false,
-            summary: "Daftar istilah penting dalam MLOps.",
-            content: `
-### Glosarium Istilah
-
-- **MLOps**: Machine Learning Operations.
-- **Data Drift**: Perubahan distribusi input data dari waktu ke waktu.
-- **Concept Drift**: Perubahan hubungan antara input fitur dengan target prediksi.
-- **CI/CD**: Continuous Integration / Continuous Deployment.
-            `,
-          },
-          {
-            id: "mod-1-8",
-            slug: "daftar-referensi",
-            title: "Daftar Referensi",
-            orderNumber: "1.8",
-            type: "article",
-            durationMinutes: 5,
-            isFree: false,
-            summary: "Buku, paper, dan dokumentasi acuan.",
-            content: `
-### Daftar Referensi Acuan
-
-1. *Designing Machine Learning Systems* oleh Chip Huyen.
-2. *Machine Learning Engineering in Action* oleh Ben Wilson.
-3. Dokumentasi resmi MLflow, Kubeflow, dan DVC.
+Dalam dunia modern, membuat model Machine Learning saja tidaklah cukup. Tantangan terbesar adalah bagaimana model tersebut dapat diintegrasikan ke sistem nyata.
             `,
           },
         ],
@@ -163,13 +257,16 @@ Tanyakan kendala yang Anda temui langsung di forum komunitas Discord Xcode. Tim 
       {
         id: "ch-2",
         title: "PENGANTAR MACHINE LEARNING OPERATIONS (MLOPS)",
+        chapter_title: "PENGANTAR MACHINE LEARNING OPERATIONS (MLOPS)",
         orderIndex: 2,
+        order_index: 2,
         modules: [
           {
             id: "mod-2-1",
             slug: "pengenalan-machine-learning-operations",
             title: "Pengenalan Machine Learning Operations",
             orderNumber: "2.1",
+            order_index: 3,
             type: "article",
             durationMinutes: 15,
             isFree: false,
@@ -178,67 +275,6 @@ Tanyakan kendala yang Anda temui langsung di forum komunitas Discord Xcode. Tim 
 Sama halnya dengan integrasi antara tim software developer dan IT Operations, mereka memiliki prioritas, peralatan, dan pola kerjanya sendiri-sendiri sehingga sering kali menimbulkan pergolakan saat mereka bekerja sama.
 
 **Developer** biasanya dituntut untuk cepat mengembangkan **fitur**, memperbaiki bug, dan menambah fitur pada sebuah aplikasi. Sayangnya, fokus pada kecepatan sering membuat kualitas kode terabaikan. Di sisi lain, **IT Operations** bertugas menjaga infrastruktur tetap stabil dan bebas dari bug (gangguan). Masalahnya, perubahan dari aplikasi—terutama dengan intensitas deployment yang tinggi—sering kali mengganggu stabilitas tersebut.
-
-Konflik ini sering berujung pada kurangnya pemahaman dan komunikasi. Developer cenderung *"melempar kode"* ke IT Operations tanpa memikirkan bagaimana kode tersebut berjalan di **production** dengan dalih *"Kodenya berjalan di laptopku"*.
-
-Sementara IT Operations menerima kode tanpa memahami tujuannya. Ketika ini terjadi tentunya stabilitas sistem menjadi taruhannya.
-
-Dalam konteks Machine Learning, tantangan ini berlipat ganda: kita tidak hanya mengelola kode aplikasi, namun juga mengelola **data**, **model**, dan **dependensi komputasi** (GPU/CPU) yang terus berkembang secara dinamis.
-            `,
-          },
-          {
-            id: "mod-2-2",
-            slug: "permasalahan-umum-ketika-membangun-sistem-machine-learning",
-            title: "Permasalahan Umum ketika Membangun Sistem Machine Learning",
-            orderNumber: "2.2",
-            type: "article",
-            durationMinutes: 15,
-            isFree: false,
-            summary: "Tantangan teknis dan kultural dalam mengoperasikan ML di production.",
-            content: `
-### Permasalahan Umum Sistem ML
-
-1. **Hidden Technical Debt in Machine Learning**: Hanya sebagian kecil kode yang berisi model ML sesungguhnya; mayoritas sistem terdiri dari plumbing data, verifikasi, konfigurasi, dan monitoring.
-2. **Reproducibility**: Bagaimana memastikan hasil training model yang sama dapat diulang 6 bulan dari sekarang?
-3. **Data Quality & Testing**: Kode bisa berjalan sempurna tanpa syntax error, namun menghasilkan output salah karena data input terdegradasi.
-            `,
-          },
-          {
-            id: "mod-2-3",
-            slug: "machine-learning-life-cycle",
-            title: "Machine Learning Life Cycle",
-            orderNumber: "2.3",
-            type: "article",
-            durationMinutes: 20,
-            isFree: false,
-            summary: "Siklus hidup ML dari perumusan masalah, eksplorasi data, hingga monitoring pasca-rilis.",
-            content: `
-### Siklus Hidup Machine Learning (ML Life Cycle)
-
-Siklus MLOps terdiri dari fase berulang:
-1. **Scoping**: Menentukan tujuan bisnis dan metrik evaluasi.
-2. **Data**: Pengumpulan, pembersihan, pelabelan, dan versioning data.
-3. **Modeling**: Pelatihan model, hyperparameter tuning, dan pengujian performa.
-4. **Deployment**: Membawa model ke environment serving (API / batch inference).
-5. **Monitoring**: Memantau degradasi performa, data drift, dan latensi.
-            `,
-          },
-          {
-            id: "mod-2-4",
-            slug: "mlops-maturity",
-            title: "MLOps Maturity",
-            orderNumber: "2.4",
-            type: "article",
-            durationMinutes: 12,
-            isFree: false,
-            summary: "Tingkatan maturitas adopsi MLOps pada organisasi.",
-            content: `
-### Tingkat Kematangan MLOps (MLOps Maturity Level)
-
-Menurut Google Cloud Architecture Framework:
-- **Level 0**: Proses manual (Jupyter notebook, manual deploy).
-- **Level 1**: Continuous Training (otomatisasi pipeline training saat ada data baru).
-- **Level 2**: Otomatisasi CI/CD Pipeline lengkap (kode, data, model terintegrasi end-to-end).
             `,
           },
         ],
@@ -247,7 +283,7 @@ Menurut Google Cloud Architecture Framework:
   },
 ];
 
-// Helper / Repository Functions (Abstraksi Database)
+// Helper / Repository Functions (Abstraksi Database MySQL)
 export async function getAllCourses(): Promise<Course[]> {
   return initialCourses;
 }
