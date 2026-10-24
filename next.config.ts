@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
-  assetPrefix: isProd ? (process.env.NEXT_PUBLIC_ASSET_PREFIX || "https://codexid.vercel.app") : undefined,
+  assetPrefix: process.env.NODE_ENV === "production" ? "https://codexid.vercel.app" : "",
   async headers() {
     return [
       {
