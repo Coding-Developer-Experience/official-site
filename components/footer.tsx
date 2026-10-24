@@ -42,6 +42,7 @@ function LinkedinIcon({ className }: { className?: string }) {
 const navigation = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Materi", href: "/materi" },
   { label: "Projects", href: "#projects" },
   { label: "Events", href: "#events" },
   { label: "Blog", href: "#blog" },
